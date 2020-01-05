@@ -121,7 +121,6 @@ module.exports = {
           },
         ]),
       },
-      // 没用
       {
         test: /\.scss$/,
         exclude: /\.module\.scss$/,
