@@ -1,11 +1,12 @@
 {
   "name": "react-dom-basic-kit",
-  "version": "0.0.13",
+  "version": "0.0.17",
   "description": "A simplify work flow for react",
   "main": "build/index.js",
   "scripts": {
     "start": "start-storybook -p 6006",
     "build": "webpack",
+    "build:prod": "npm run build && npm publish",
     "format": "npm run format:tslint && npm run format:prettier",
     "format:tslint": "tslint --fix --config ./tslint.json 'src/**/*.{ts,tsx}'",
     "format:prettier": "prettier --config .prettierrc --write 'src/**/*.{js,jsx,ts,tsx,scss}'"
@@ -44,6 +45,7 @@
     "@types/uuid": "^3.4.5",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "husky": "^3.0.7",

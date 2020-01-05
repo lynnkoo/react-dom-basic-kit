@@ -6,55 +6,8 @@ var nodeExternals = require('webpack-node-externals')
 var fs = require('fs')
 var path = require('path')
 var getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
-const { CheckerPlugin } = require('awesome-typescript-loader')
-
-// let entry = {};
-
-// function walk(dir, callback) {
-//   fs.readdir(dir, function(err, files) {
-//       if (err) throw err;
-//       files.forEach(function(file) {
-//           var filepath = path.join(dir, file);
-//           fs.stat(filepath, function(err,stats) {
-//               if (stats.isDirectory()) {
-//                   walk(filepath);
-//               } else {
-//                 console.log(filepath);
-
-//                 if (filepath.endsWith('index.ts')) {
-//                   let target = filepath.split('/index.ts')[0].split('/src/')[1]
-//                   entry[target] = './src/' + target;
-//                   console.log(target);
-//                 }
-//                 entry['111'] = 1;
-//               }
-//           });
-//       });
-//   });
-// }
-
-// function initEntry(dir) {
-//   fs.readdirSync(dir).forEach(function(file) {
-//     var pathname = path.join(dir, file)
-//     if (fs.statSync(pathname).isDirectory()) {
-//       initEntry(pathname)
-//     } else {
-//       console.log(pathname);
-
-//       if (pathname.endsWith('index.ts')) {
-//         let target = pathname.split('/index.ts')[0].split('/src/')[1]
-//         entry[target] = './src/' + target;
-//       }
-//       // if (!pathname.endsWith('map')) {
-//       //   put(target, pathname)
-//       // }
-//     }
-//   })
-// }
-
-// walk(path.join(__dirname, './src'))
-
-// console.log(entry);
+var { CheckerPlugin } = require('awesome-typescript-loader')
+var { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
   mode: 'production',
@@ -140,37 +93,6 @@ module.exports = {
           },
         ]),
       },
-      // {
-      //   test: /\.scss$/,
-      //   exclude: /\.module\.scss$/,
-      //   use: [
-      //     {
-      //       loader: 'css-loader',
-      //       options: {
-      //         importLoaders: 2,
-      //       }
-      //     },
-      //     {
-      //       loader: "sass-loader",
-      //       options: {
-      //         sourceMap: true,
-      //       },
-      //     }
-      //   ]
-      // },
-      // {
-      //   test: /\.scss$/,
-      //   use: ExtractTextPlugin.extract({
-      //     use: {
-      //       loader: "sass-loader",
-      //       options: {
-      //         sourceMap: true,
-      //         modules:true,
-      //         importLoaders: 2,
-      //       }
-      //     }
-      //   }),
-      // },
 
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       // { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
@@ -182,5 +104,5 @@ module.exports = {
   // This is important because it allows us to avoid bundling all of our
   // dependencies, which allows browsers to cache those libraries between builds.
   externals: [nodeExternals()],
-  plugins: [new ExtractTextPlugin('./[name].css'), new CheckerPlugin()],
+  plugins: [new ExtractTextPlugin('./[name].css'), new CleanWebpackPlugin()],
 }
