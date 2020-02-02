@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom'
 import styles from './styles/Toast.module.scss'
 import { transformStyles } from '../utils/styles'
 import { AppContext } from '../containers/Container'
+import { usePopupShown } from './Popup'
 
 const cx = transformStyles(styles)
 
@@ -21,7 +22,6 @@ const removeToastLayer = (rootNode: HTMLElement) => {
     if (!document.body.contains(rootNode)) {
       return
     }
-    document.body.className = ''
     document.body.removeChild(rootNode)
   }
 }
@@ -42,17 +42,29 @@ const ToastComponent = (props: any) => {
 }
 
 export const Toast: React.FC<any> = (props) => {
-  const { children } = props
+  const { children, className, duration = 1500, animDuration = 3000 } = props
   const [visible, setVisible] = React.useState(true)
-  const { removeToast } = React.useContext(AppContext)
+  const shown = usePopupShown()
+  const [hidden, setHidden] = React.useState(false)
   React.useEffect(() => {
-    setTimeout(() => {
+    const toastTimer = setTimeout(() => {
       setVisible(false)
-    }, 1500)
-  })
+    }, duration + animDuration)
+    const hiddenTimer = setTimeout(() => {
+      setHidden(true)
+    }, duration)
+    return () => {
+      clearTimeout(toastTimer)
+      clearTimeout(hiddenTimer)
+    }
+  }, [])
   return visible ? (
     <ToastComponent>
-      <div className={cx('toast')}>{children}</div>
+      <div
+        className={cx('toast', className, { shown: shown && !hidden, hidden })}
+      >
+        {children}
+      </div>
     </ToastComponent>
   ) : null
 }

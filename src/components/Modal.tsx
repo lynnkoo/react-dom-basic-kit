@@ -16,16 +16,31 @@ type IDrawerModalProps = IPopupProps & {
   children: React.ReactElement
   blankClose?: boolean
   className?: string
+  noBg?: boolean
+  noAnim?: boolean
 }
 
 const TModal: React.FC<IDrawerModalProps> = (props) => {
-  const { isOpen, onClose, onRemove, blankClose, children, className } = props
+  const {
+    isOpen,
+    onClose,
+    onRemove,
+    blankClose,
+    children,
+    className,
+    noBg,
+    noAnim,
+  } = props
   const shown = usePopupShown(isOpen)
   const onRemoveModal = usePopupLayerOverlay(shown, onRemove)
 
   return (
     <div
-      className={cx('modal', className, { shown })}
+      className={cx('modal', className, {
+        shown,
+        'no-bg': noBg,
+        'no-anim': noAnim,
+      })}
       onClick={blankClose ? onClose : undefined}
       onTransitionEnd={onRemoveModal}
     >

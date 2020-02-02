@@ -1,7 +1,7 @@
 {
   "name": "react-dom-basic-kit",
-  "version": "0.0.17",
-  "description": "A simplify work flow for react",
+  "version": "0.0.26",
+  "description": "react dom basic kit",
   "main": "build/index.js",
   "scripts": {
     "start": "start-storybook -p 6006",
@@ -16,9 +16,9 @@
     "url": "git+https://github.com/lynnkoo/react-dom-basic-kit.git"
   },
   "keywords": [
-    "redux-async-kit",
-    "redux-async",
-    "redux"
+    "react-dom-basic-kit",
+    "react-dom",
+    "react"
   ],
   "author": "lynnkoo",
   "license": "MIT",

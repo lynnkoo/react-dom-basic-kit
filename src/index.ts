@@ -1,6 +1,4 @@
-import './styles/normalize.scss'
-import './styles/reset.scss'
-import './styles/global.scss'
+import './styles/index.scss'
 export * from './containers/Container'
 export * from './containers/ModalLayer'
 export * from './components/Popup'

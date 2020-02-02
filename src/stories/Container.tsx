@@ -4,17 +4,11 @@ import { useToggleModal } from '../containers/ModalLayer'
 import { Modal } from '../components/Modal'
 
 export const ToggleToastComponent = () => {
-  const toggleToast = useToggleToast('toggle toast')
-  return <div onClick={toggleToast}>Toggle Toast Test</div>
-}
-
-export const ToggleModalComponent = () => {
-  const toggleModal = useToggleModal((mProps: any) => (
-    <Modal {...mProps} blankClose>
-      <div>Toggle Modal Test</div>
-    </Modal>
-  ))
-  return <div onClick={toggleModal}>Toggle Modal Test</div>
+  const toggleToast = useToggleToast()
+  const toggleMessage = () => {
+    toggleToast('text')
+  }
+  return <div onClick={toggleMessage}>Toggle Toast Test</div>
 }
 
 export const ToggleToast = () => {
@@ -24,6 +18,16 @@ export const ToggleToast = () => {
     </Container>
   )
 }
+
+export const ToggleModalComponent = () => {
+  const toggleModal = useToggleModal((mProps: any) => (
+    <Modal blankClose {...mProps}>
+      <div>Toggle Modal Test</div>
+    </Modal>
+  ))
+  return <div onClick={toggleModal}>Toggle Dialog Modal</div>
+}
+
 export const ToggleModal = () => {
   return (
     <Container>

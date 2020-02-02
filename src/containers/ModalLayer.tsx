@@ -1,6 +1,7 @@
 import * as React from 'react'
 import uuidv4 from 'uuid/v4'
 import { useLocation } from 'react-router-dom'
+import { useLoadingContext } from './Container'
 
 const TOGGLED_MODALES: any = {}
 
@@ -114,10 +115,16 @@ export const ModalLayer: React.FC<any> = (props) => {
     closeModal(key)
   }
 
-  const modalContext = { showModal, closeModal, removeModal, updateModal }
+  const [modalContext, loading] = useLoadingContext({
+    showModal,
+    closeModal,
+    removeModal,
+    updateModal,
+  })
+
   return (
     <ModalContext.Provider value={modalContext}>
-      {children}
+      {!loading && children}
       {Object.keys(modalsMap).map((key, i) => {
         return React.createElement(modalsMap[key], {
           key,
