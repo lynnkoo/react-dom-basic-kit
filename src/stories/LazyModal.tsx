@@ -1,6 +1,5 @@
 import React from 'react'
-import { useToggleToast, Container } from '../containers/Container'
-import { useToggleModal } from '../containers/ModalLayer'
+import { useToggleToast, Container } from '../index'
 import { Modal } from '../components/Modal'
 
 export const LazyModal = (props: any) => {

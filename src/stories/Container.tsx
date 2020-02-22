@@ -1,7 +1,20 @@
 import React from 'react'
-import { useToggleToast, Container } from '../containers/Container'
-import { useToggleModal } from '../containers/ModalLayer'
+import {} from '../containers/ModalLayer'
 import { Modal } from '../components/Modal'
+import {
+  useAppContext,
+  useToggleToast,
+  useThemeStyles,
+  Container,
+  useToggleModal,
+} from '../index'
+
+import styles from './styles/Container.module.scss'
+import styles_dark from './styles/Container-dark.module.scss'
+
+function useStyles() {
+  return useThemeStyles(styles, { dark: styles_dark })
+}
 
 export const ToggleToastComponent = () => {
   const toggleToast = useToggleToast()
@@ -19,13 +32,38 @@ export const ToggleToast = () => {
   )
 }
 
+const ThemeingText = () => {
+  const cx = useStyles()
+  return <div className={cx('test')}>Theme test Text</div>
+}
+
 export const ToggleModalComponent = () => {
-  const toggleModal = useToggleModal((mProps: any) => (
-    <Modal blankClose {...mProps}>
-      <div>Toggle Modal Test</div>
-    </Modal>
-  ))
-  return <div onClick={toggleModal}>Toggle Dialog Modal</div>
+  const cx = useStyles()
+  const { theme, setTheme } = useAppContext()
+  const toggleModal = useToggleModal(
+    (mProps: any) => (
+      <Modal blankClose {...mProps}>
+        <div className={cx('test')}>Toggle Modal Test</div>
+      </Modal>
+    ),
+    [theme],
+  )
+  const toDark = () => {
+    setTheme('dark')
+  }
+  const clearTheme = () => {
+    setTheme('')
+  }
+  return (
+    <div>
+      <div className={cx('test')} onClick={toggleModal}>
+        Toggle Dialog Modal
+      </div>
+      <ThemeingText />
+      <div onClick={toDark}>Toggle Dialog Modal</div>
+      <div onClick={clearTheme}>Toggle Dialog Modal</div>
+    </div>
+  )
 }
 
 export const ToggleModal = () => {

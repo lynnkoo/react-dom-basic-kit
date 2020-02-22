@@ -1,11 +1,20 @@
 import classNames from 'classnames'
-export function transformStyles(styles: any) {
-  const keyMapper = (key: string) => styles[key] || key
-  return (...opts: any[]) => {
-    const className = classNames(opts)
+
+type IThemeStylesMap = {
+  [key: string]: any
+}
+
+export function transformStyles(styles: any, opts: any = {}) {
+  const { themes = {}, currentTheme = '' } = opts
+  const themeStyle = themes[currentTheme] || {}
+  const classMapper = (key: string) =>
+    [styles[key] || key, themeStyle[key]].filter(Boolean).join(' ')
+
+  return (...classOpts: any[]) => {
+    const className = classNames(classOpts)
     return className
       .split(' ')
-      .map(keyMapper)
+      .map(classMapper)
       .join(' ')
   }
 }

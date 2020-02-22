@@ -1,6 +1,6 @@
 {
   "name": "react-dom-basic-kit",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "react dom basic kit",
   "main": "build/index.js",
   "scripts": {

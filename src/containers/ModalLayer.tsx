@@ -1,9 +1,7 @@
 import * as React from 'react'
 import uuidv4 from 'uuid/v4'
 import { useLocation } from 'react-router-dom'
-import { useLoadingContext } from './Container'
-
-const TOGGLED_MODALES: any = {}
+import { TOGGLED_MODALES } from '../logics/ModalLayerHooks'
 
 export function asModalProps(props: any) {
   return {
@@ -14,51 +12,6 @@ export function asModalProps(props: any) {
 }
 
 export const ModalContext = React.createContext<any>(null)
-
-function useUpdateModal(modalId: any, modal: any, deps: any[]) {
-  const { updateModal } = React.useContext(ModalContext)
-  React.useEffect(() => {
-    if (modalId) {
-      updateModal(modalId, modal)
-    }
-  }, [modalId, modal, ...deps])
-}
-
-export function useToggleModal(modal: any, deps: any = []) {
-  const { showModal, closeModal } = React.useContext(ModalContext)
-  const [activeModal, setActiveModal] = React.useState<any>(null)
-  const memoModal = React.useMemo(() => modal, deps)
-  const toggleModal = React.useCallback(() => {
-    if (activeModal && !TOGGLED_MODALES[activeModal]) {
-      setActiveModal(null)
-      closeModal(activeModal)
-    } else {
-      if (TOGGLED_MODALES[activeModal]) {
-        delete TOGGLED_MODALES[activeModal]
-      }
-      const modalId = showModal(memoModal)
-      setActiveModal(modalId)
-    }
-  }, [activeModal, ...deps])
-  useUpdateModal(activeModal, memoModal, deps)
-  return toggleModal
-}
-
-export function useModal(modal: any, deps: any = []) {
-  const { showModal, closeModal } = React.useContext(ModalContext)
-  const [activeModal, setActiveModal] = React.useState()
-  const memoModal = React.useMemo(() => modal, deps)
-  const onShowModal = React.useCallback(() => {
-    const modalId = showModal(memoModal)
-    setActiveModal(modalId)
-  }, deps)
-  const onCloseModal = React.useCallback(() => {
-    setActiveModal(null)
-    closeModal(activeModal)
-  }, [activeModal])
-  useUpdateModal(activeModal, memoModal, deps)
-  return [onShowModal, onCloseModal]
-}
 
 export function cloneModalContent(children: any) {
   return React.cloneElement(children, {
@@ -72,6 +25,17 @@ export function cloneModalContent(children: any) {
   })
 }
 
+// WORKAROUND: webpack 打包时，如果依赖 context 是否为 null 进行 render,
+// 则第二次 webpack 打包之后，存在先 render 的问题
+function useLoadingContext(defaultContext: any): any {
+  const [context, setContext] = React.useState(null)
+  React.useEffect(() => {
+    setContext((mContext) => mContext || defaultContext)
+  }, [defaultContext])
+  return [context, !context]
+}
+
+// LEGACYCODE: 有机会改成 React.useReducer 的形式...算了，没啥机会了
 export const ModalLayer: React.FC<any> = (props) => {
   const { children } = props
   const { pathname } = useLocation()

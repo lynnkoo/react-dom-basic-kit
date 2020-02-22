@@ -7,13 +7,13 @@ export const Form: React.FC = () => {
 const FormContext = React.createContext<any>({})
 
 export const enhanceFormComponent = (WrappedComponent: any) => (props: any) => {
-  const [formContext, setFormContext] = React.useState()
-  const [formData, setFormData] = React.useState({})
+  const [formContext, setFormContext] = React.useState<any>()
+  const [formData, setFormData] = React.useState<any>({})
   React.useEffect(() => {
     setFormContext({
       formData,
       setFormData: (data: any) => {
-        setFormData((x) => ({ ...x, ...data }))
+        setFormData((x: any) => ({ ...x, ...data }))
       },
     })
   }, [formData])

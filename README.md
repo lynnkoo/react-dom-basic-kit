@@ -47,6 +47,34 @@ export const ToggleModalComponent = () => {
 }
 ```
 
+### Theme
+
+```javascript
+import styles from './styles/Container.module.scss'
+import styles_dark from './styles/Container-dark.module.scss'
+
+function useStyles() {
+  return useThemeStyles(styles, { dark: styles_dark })
+}
+
+const ThemeingText = () => {
+  const cx = useStyles()
+  return <div className={cx('test')}>Theme test Text</div>
+}
+
+const Comp = () => {
+  const { theme, setTheme } = useAppContext()
+  const toDark = () => {
+    setTheme('dark')
+  }
+  const clearTheme = () => {
+    setTheme('')
+  }
+  return (...)
+}
+
+```
+
 More examples is in the stories
 
 Thanks
