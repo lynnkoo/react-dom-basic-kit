@@ -1,35 +1,53 @@
 import * as React from 'react'
-
-export const Form: React.FC = () => {
-  return null
-}
+import { useInitFormContext } from '../logics/FormContext'
 
 const FormContext = React.createContext<any>({})
 
+export const TEST_NOT_NULL = /^$/
+export const TEST_NOT_NUMBER = /^[0-9]+$/
+
+export function useFormContext() {
+  return React.useContext(FormContext)
+}
+
 export const enhanceFormComponent = (WrappedComponent: any) => (props: any) => {
-  const [formContext, setFormContext] = React.useState<any>()
-  const [formData, setFormData] = React.useState<any>({})
+  const { onSubmit = () => {} } = props
+  const formContext = useInitFormContext()
+  const { data, checks } = formContext
+
   React.useEffect(() => {
-    setFormContext({
-      formData,
-      setFormData: (data: any) => {
-        setFormData((x: any) => ({ ...x, ...data }))
-      },
-    })
-  }, [formData])
+    let approved = true
+    for (const name of Object.keys(checks)) {
+      const checked = checks[name] === -1
+      if (!checked) {
+        approved = false
+      }
+    }
+    if (!approved) {
+      return
+    }
+    onSubmit(data)
+  }, [checks])
   return (
     <FormContext.Provider value={formContext}>
-      {formContext && <WrappedComponent {...props} />}
+      <WrappedComponent {...props} />
     </FormContext.Provider>
   )
 }
 
+export const enhanceFormInput = (WrappedComponent: any) => (props: any) => {
+  const { name, test } = props
+  const { initial, updateTest } = useFormContext()
+  React.useEffect(() => {
+    initial(name)
+    if (test) {
+      updateTest({ [name]: test })
+    }
+  }, [])
+  return <WrappedComponent {...props} />
+}
+
 export function useFormState() {
   const { formData, setFormData } = React.useContext(FormContext)
-  // React.useEffect(() => {
-  //   if (data) {
-  //     setFormData(data)
-  //   }
-  // }, [])
   return [formData, setFormData]
 }

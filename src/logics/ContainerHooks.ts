@@ -6,6 +6,7 @@ export function useAppContext() {
   return React.useContext(AppContext)
 }
 
+// TODO: legacy code
 export function useToastError(error: any) {
   const toggleToast = useToggleToast()
   React.useEffect(() => {
