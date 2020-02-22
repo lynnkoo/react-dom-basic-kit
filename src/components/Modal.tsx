@@ -12,25 +12,21 @@ import { cloneModalContent } from '../containers/ModalLayer'
 
 const cx = transformStyles(styles)
 
-type IDrawerModalProps = IPopupProps & {
-  children: React.ReactElement
+type IModalOpts = {
   blankClose?: boolean
-  className?: string
   noBg?: boolean
   noAnim?: boolean
 }
 
+type IDrawerModalProps = IPopupProps & {
+  children: React.ReactElement
+  className?: string
+  opts?: IModalOpts
+}
+
 const TModal: React.FC<IDrawerModalProps> = (props) => {
-  const {
-    isOpen,
-    onClose,
-    onRemove,
-    blankClose,
-    children,
-    className,
-    noBg,
-    noAnim,
-  } = props
+  const { isOpen, onClose, onRemove, children, className, opts = {} } = props
+  const { blankClose, noBg, noAnim } = opts
   const shown = usePopupShown(isOpen)
   const onRemoveModal = usePopupLayerOverlay(shown, onRemove)
 

@@ -42,7 +42,7 @@ export const ToggleModalComponent = () => {
   const { theme, setTheme } = useAppContext()
   const toggleModal = useToggleModal(
     (mProps: any) => (
-      <Modal blankClose {...mProps}>
+      <Modal {...mProps} opts={{ blankClose: true }}>
         <div className={cx('test')}>Toggle Modal Test</div>
       </Modal>
     ),
