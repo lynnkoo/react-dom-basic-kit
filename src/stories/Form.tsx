@@ -17,7 +17,6 @@ const TFormInput: React.FC<IFormInput> = (props) => {
   const { name, value, tips } = props
   const { update, checks, clearTips, check, errors } = useFormContext()
   const error = tips[checks[name]] || errors[name]
-  console.log(111, value)
   return (
     <div>
       <Input

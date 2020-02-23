@@ -35,7 +35,7 @@ export const Input: React.FC<IInputProps> = (props) => {
     <input
       {...otherProps}
       ref={inputRef}
-      value={inputValue}
+      value={inputValue || ''}
       onChange={onInputChange}
       onCompositionStart={() => setTyping(true)}
       onCompositionEnd={() => setTyping(false)}
