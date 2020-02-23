@@ -5,10 +5,15 @@ import {
   enhanceFormInput,
   TEST_NOT_NULL,
   TEST_NOT_NUMBER,
+  IFormInputProps,
 } from '../components/Form'
 import { Input } from '../components/Input'
 
-const TFormInput: React.FC<any> = (props: any) => {
+type IFormInput = IFormInputProps & {
+  tips: string[]
+}
+
+const TFormInput: React.FC<IFormInput> = (props) => {
   const { name, value, tips } = props
   const { update, checks, clearTips, check, errors } = useFormContext()
   const error = tips[checks[name]] || errors[name]
@@ -26,9 +31,14 @@ const TFormInput: React.FC<any> = (props: any) => {
   )
 }
 
-const FormInput = enhanceFormInput(TFormInput)
+const FormInput = enhanceFormInput<IFormInput>(TFormInput)
 
-const TForm: React.FC<any> = (props) => {
+type IFormProps = {
+  pending?: boolean
+  errors?: any
+}
+
+const TForm: React.FC<IFormProps> = (props) => {
   const { children, pending, errors } = props
   const { data, submit, update, updateError } = useFormContext()
   React.useEffect(() => {
@@ -47,7 +57,7 @@ const TForm: React.FC<any> = (props) => {
   )
 }
 
-export const Form1 = enhanceFormComponent(TForm)
+export const Form1 = enhanceFormComponent<IFormProps>(TForm)
 
 export const FormTest = (props: any) => {
   const [pending, setPending] = React.useState(false)

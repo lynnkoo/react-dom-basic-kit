@@ -1,6 +1,12 @@
 import produce from 'immer'
 
-export function createReducer(reducerMap: any) {
+export type IReducerMapResult<T> = {
+  [key: string]: (action: any) => T | void
+}
+
+export type IReducerMap<T> = (state: T) => IReducerMapResult<T>
+
+export function createReducer(reducerMap: IReducerMap<any>) {
   return produce((state: any, action: any) => {
     console.log(action)
     const reducer = reducerMap(state)[action.type]
