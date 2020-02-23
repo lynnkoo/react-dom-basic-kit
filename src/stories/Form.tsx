@@ -9,15 +9,17 @@ import {
 import { Input } from '../components/Input'
 
 const TFormInput: React.FC<any> = (props: any) => {
-  const { name, tips } = props
+  const { name, value, tips } = props
   const { update, checks, clearTips, check, errors } = useFormContext()
   const error = tips[checks[name]] || errors[name]
+  console.log(111, value)
   return (
     <div>
       <Input
         onChange={(x) => update({ [name]: x.value })}
         onFocus={() => clearTips(name)}
         onBlur={() => check(name)}
+        value={value}
       />
       {error}
     </div>
@@ -28,15 +30,19 @@ const FormInput = enhanceFormInput(TFormInput)
 
 const TForm: React.FC<any> = (props) => {
   const { children, pending, errors } = props
-  const { data, submit, updateError } = useFormContext()
+  const { data, submit, update, updateError } = useFormContext()
   React.useEffect(() => {
     updateError(errors)
   }, [errors])
+  const updatexx = () => {
+    update({ x2: 'xxxx' })
+  }
   return (
     <form>
       <div>In Form1: {JSON.stringify(data)}</div>
       {children}
       <div onClick={submit}>SUBMIT{pending && '...'}</div>
+      <div onClick={updatexx}>Update xx</div>
     </form>
   )
 }

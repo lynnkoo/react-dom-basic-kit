@@ -43,15 +43,15 @@ export const enhanceFormComponent = (WrappedComponent: any) => (props: any) => {
 }
 
 export const enhanceFormInput = (WrappedComponent: any) => (props: any) => {
-  const { name, test } = props
-  const { initial, updateTest } = useFormContext()
+  const { name, test, value } = props
+  const { initial, data, updateTest } = useFormContext()
   React.useEffect(() => {
     initial(name)
     if (test) {
       updateTest({ [name]: test })
     }
   }, [])
-  return <WrappedComponent {...props} />
+  return <WrappedComponent {...props} value={value || data[name]} />
 }
 
 export function useFormState() {
