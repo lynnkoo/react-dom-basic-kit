@@ -13,8 +13,7 @@ export function useFormContext() {
 export const enhanceFormComponent = (WrappedComponent: any) => (props: any) => {
   const { onSubmit = () => {} } = props
   const formContext = useInitFormContext()
-  const { data, checks } = formContext
-
+  const { data, checks, errors, doSubmit } = formContext
   React.useEffect(() => {
     let approved = true
     for (const name of Object.keys(checks)) {
@@ -23,11 +22,19 @@ export const enhanceFormComponent = (WrappedComponent: any) => (props: any) => {
         approved = false
       }
     }
+    for (const name of Object.keys(errors)) {
+      const checked = !errors[name]
+      if (!checked) {
+        approved = false
+      }
+    }
     if (!approved) {
       return
     }
-    onSubmit(data)
-  }, [checks])
+    if (doSubmit.valueOf()) {
+      onSubmit(data)
+    }
+  }, [doSubmit])
   return (
     <FormContext.Provider value={formContext}>
       <WrappedComponent {...props} />
