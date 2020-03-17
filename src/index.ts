@@ -1,3 +1,5 @@
+import './index.scss'
+
 export * from './containers/Container'
 export * from './containers/ModalLayer'
 export * from './components/Popup'

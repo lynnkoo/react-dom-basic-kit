@@ -12,7 +12,7 @@ var { CleanWebpackPlugin } = require('clean-webpack-plugin')
 module.exports = {
   mode: 'production',
   entry: {
-    index: ['./src/index.ts', './src/index.scss'],
+    index: './src/index.ts',
   },
   output: {
     filename: '[name].js',
