@@ -1,14 +1,10 @@
+@import '~scss-basic-kit/lib/common.scss';
+
 .popup-layer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
+  @include l-position(fixed, 0 0 0 0);
   touch-action: none;
 }
 
 .popup-locked-body {
-  position: fixed;
-  left: 0;
-  right: 0;
+  @include l-position(fixed, x 0 x 0);
 }

@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ModalLayer } from './ModalLayer'
 import { Toast } from '../components/Toast'
 import { useInitAppContext } from '../logics/ContainerContext'
-import { transformStyles } from '../utils/styles'
+import { transformStyles } from '../utils/style'
 
 type IAppContainerProps = {
   basename?: string

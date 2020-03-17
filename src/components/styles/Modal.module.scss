@@ -1,7 +1,7 @@
+@import '~scss-basic-kit/lib/common.scss';
+
 .modal {
-  bottom: 0;
-  position: absolute;
-  top: 0;
+  @include l-position(absolute, 0 x 0 x);
   transition: background-color 0.3s, opacity 0.3s;
   width: 100%;
   z-index: 5000;

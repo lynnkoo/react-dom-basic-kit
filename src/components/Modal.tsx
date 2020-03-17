@@ -7,7 +7,7 @@ import {
   usePopupLayerOverlay,
 } from '../components/Popup'
 
-import { transformStyles } from '../utils/styles'
+import { transformStyles } from '../utils/style'
 import { cloneModalContent } from '../containers/ModalLayer'
 
 const cx = transformStyles(styles)

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import styles from './styles/Toast.module.scss'
-import { transformStyles } from '../utils/styles'
+import { transformStyles } from '../utils/style'
 import { usePopupShown } from './Popup'
 
 const cx = transformStyles(styles)
