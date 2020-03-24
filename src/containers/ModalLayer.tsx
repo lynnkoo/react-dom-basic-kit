@@ -40,14 +40,18 @@ export const ModalLayer: React.FC<any> = (props) => {
   const { children } = props
   const { pathname } = useLocation()
   const [modalsMap, setModalsMap] = React.useState<any>({})
+  const [optsMap, setOptsMap] = React.useState<any>({})
   const [hiddenModals, setHiddenModals] = React.useState<any>([])
 
   React.useEffect(() => {
     setModalsMap({})
   }, [pathname])
 
-  const showModal = (modal: any, id?: any) => {
+  const showModal = (modal: any, id?: any, props?: any) => {
     const uuid = id || uuidv4()
+    if (props) {
+      setOptsMap((opts: any) => ({ ...opts, [uuid]: props }))
+    }
     setModalsMap((modals: any) => ({ ...modals, [uuid]: modal }))
     return uuid
   }
@@ -91,6 +95,7 @@ export const ModalLayer: React.FC<any> = (props) => {
       {!loading && children}
       {Object.keys(modalsMap).map((key, i) => {
         return React.createElement(modalsMap[key], {
+          ...(optsMap[key] || {}),
           key,
           isOpen: !hiddenModals.includes(key),
           onClose: onCloseBySelf(key, modalsMap[key]),

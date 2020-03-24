@@ -37,6 +37,15 @@ const ThemeingText = () => {
   return <div className={cx('test')}>Theme test Text</div>
 }
 
+const TestModal = (props: any) => {
+  const cx = useStyles()
+  return (
+    <Modal {...props} opts={{ blankClose: true }}>
+      <div className={cx('test')}>Toggle Modal Test2</div>
+    </Modal>
+  )
+}
+
 export const ToggleModalComponent = () => {
   const cx = useStyles()
   const { theme, setTheme } = useAppContext()
@@ -47,7 +56,11 @@ export const ToggleModalComponent = () => {
       </Modal>
     ),
     [theme],
-  )
+  ) as any
+  const toggleModal2 = useToggleModal(
+    (mProps: any) => <TestModal {...mProps} />,
+    [theme],
+  ) as any
   const toDark = () => {
     setTheme('dark')
   }
@@ -56,6 +69,9 @@ export const ToggleModalComponent = () => {
   }
   return (
     <div>
+      <div className={cx('test')} onClick={() => toggleModal2({ xxx: 'xxx' })}>
+        Toggle Dialog Modal
+      </div>
       <div className={cx('test')} onClick={toggleModal}>
         Toggle Dialog Modal
       </div>
@@ -66,7 +82,7 @@ export const ToggleModalComponent = () => {
   )
 }
 
-export const ToggleModal = () => {
+export const ToggleModal: any = (p: any) => {
   return (
     <Container>
       <ToggleModalComponent />

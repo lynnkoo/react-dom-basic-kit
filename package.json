@@ -1,6 +1,6 @@
 {
   "name": "react-dom-basic-kit",
-  "version": "0.0.34",
+  "version": "0.0.37",
   "description": "react dom basic kit",
   "main": "build/index.js",
   "scripts": {
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/lynnkoo/react-dom-basic-kit#readme",
   "dependencies": {
-    "browser-basic-kit": "^0.0.1",
+    "browser-basic-kit": "^0.0.2",
     "classnames": "^2.2.6",
     "immer": "^5.3.6",
     "react": "^16.11.0",

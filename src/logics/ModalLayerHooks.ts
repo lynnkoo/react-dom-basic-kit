@@ -16,18 +16,21 @@ export function useToggleModal(modal: any, deps: any = []) {
   const { showModal, closeModal } = React.useContext(ModalContext)
   const [activeModal, setActiveModal] = React.useState<any>(null)
   const memoModal = React.useMemo(() => modal, deps)
-  const toggleModal = React.useCallback(() => {
-    if (activeModal && !TOGGLED_MODALES[activeModal]) {
-      setActiveModal(null)
-      closeModal(activeModal)
-    } else {
-      if (TOGGLED_MODALES[activeModal]) {
-        delete TOGGLED_MODALES[activeModal]
+  const toggleModal = React.useCallback(
+    (props) => {
+      if (activeModal && !TOGGLED_MODALES[activeModal]) {
+        setActiveModal(null)
+        closeModal(activeModal)
+      } else {
+        if (TOGGLED_MODALES[activeModal]) {
+          delete TOGGLED_MODALES[activeModal]
+        }
+        const modalId = showModal(memoModal, undefined, props)
+        setActiveModal(modalId)
       }
-      const modalId = showModal(memoModal)
-      setActiveModal(modalId)
-    }
-  }, [activeModal, ...deps])
+    },
+    [activeModal, ...deps],
+  )
   useUpdateModal(activeModal, memoModal, deps)
   return toggleModal
 }
@@ -36,8 +39,8 @@ export function useModal(modal: any, deps: any = []) {
   const { showModal, closeModal } = React.useContext(ModalContext)
   const [activeModal, setActiveModal] = React.useState<any>()
   const memoModal = React.useMemo(() => modal, deps)
-  const onShowModal = React.useCallback(() => {
-    const modalId = showModal(memoModal)
+  const onShowModal = React.useCallback((props?: any) => {
+    const modalId = showModal(memoModal, undefined, props)
     setActiveModal(modalId)
   }, deps)
   const onCloseModal = React.useCallback(() => {
